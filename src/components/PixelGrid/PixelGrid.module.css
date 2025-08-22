@@ -1,0 +1,21 @@
+.wrapper {
+  border: 1px solid #000;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  width: 32rem;
+}
+
+.cell {
+  width: 2rem;
+  height: 2rem;
+  appearance: none;
+  cursor: pointer;
+  border: 1px solid #000;
+}
+
+.cell:hover {
+  border-color: #ddd;
+}

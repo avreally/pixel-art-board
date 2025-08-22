@@ -1,0 +1,13 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.color {
+  width: 2rem;
+  height: 2rem;
+  appearance: none;
+  border: 1px solid #000;
+  cursor: pointer;
+}
