@@ -1,19 +1,33 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import clsx from "clsx";
 import styles from "./PixelGrid.module.css";
 
 type PixelGridProps = {
   currentColor: string;
+  selectedSize: string;
 };
 
-export const PixelGrid = ({ currentColor }: PixelGridProps) => {
-  const size = 16;
+const canvasSizeMap = new Map([
+  ["small", 16],
+  ["medium", 32],
+  ["large", 40],
+]);
 
-  const [pixels, setPixels] = useState(
-    Array.from({ length: size }, () =>
-      Array.from({ length: size }, () => "white")
-    )
+function createEmptyCanvas(size: number) {
+  return Array.from({ length: size }, () =>
+    Array.from({ length: size }, () => "white")
   );
+}
+
+export const PixelGrid = ({ currentColor, selectedSize }: PixelGridProps) => {
+  const currentSize = canvasSizeMap.get(selectedSize) ?? 32;
+
+  const [pixels, setPixels] = useState(createEmptyCanvas(currentSize));
+
+  useEffect(() => {
+    setPixels(createEmptyCanvas(currentSize));
+  }, [currentSize]);
 
   function paintCell(rowIndex: number, columnIndex: number) {
     const newPixels = [...pixels];
@@ -26,7 +40,13 @@ export const PixelGrid = ({ currentColor }: PixelGridProps) => {
   }
 
   return (
-    <div className={styles.wrapper}>
+    <div
+      className={clsx(styles.wrapper, {
+        [styles.small]: selectedSize === "small",
+        [styles.medium]: selectedSize === "medium",
+        [styles.large]: selectedSize === "large",
+      })}
+    >
       <div className={styles.grid}>
         {pixels.map((row, rowIndex) =>
           row.map((pixel, columnIndex) => (
