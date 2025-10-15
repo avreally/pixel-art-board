@@ -29,8 +29,14 @@
 
 .main {
   display: flex;
-  gap: 32px;
+  flex-direction: column;
+  gap: 2rem;
   grid-row-start: 2;
+}
+
+.canvas {
+  display: flex;
+  gap: 2rem;
 }
 
 .main ol {
