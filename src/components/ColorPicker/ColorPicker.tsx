@@ -12,6 +12,8 @@ export const ColorPicker = ({
   setCurrentColor,
 }: ColorPickerProps) => {
   const colors = [
+    "black",
+    "white",
     "red",
     "orange",
     "yellow",
@@ -19,8 +21,6 @@ export const ColorPicker = ({
     "deepskyblue",
     "blue",
     "purple",
-    "white",
-    "black",
   ];
 
   return (
