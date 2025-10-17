@@ -12,19 +12,19 @@ export default function Home() {
   return (
     <div className={styles.page}>
       <main className={styles.main}>
+        <div>Pixel Art Board</div>
         <SizeSelector
           selectedSize={selectedSize}
           setSelectedSize={setSelectedSize}
         />
         <div className={styles.canvas}>
-          <PixelGrid currentColor={currentColor} selectedSize={selectedSize} />
           <ColorPicker
             currentColor={currentColor}
             setCurrentColor={setCurrentColor}
           />
+          <PixelGrid currentColor={currentColor} selectedSize={selectedSize} />
         </div>
       </main>
-      <footer className={styles.footer}></footer>
     </div>
   );
 }
