@@ -1,3 +1,19 @@
+.options {
+  display: flex;
+  gap: 1rem;
+  padding-bottom: 2rem;
+  justify-content: flex-end;
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+}
+
+.button {
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+}
+
 .wrapper {
   box-shadow: 0 0 0 1px #cdcdcd;
   height: 100%;
