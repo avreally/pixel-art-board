@@ -29,10 +29,12 @@ export default function Home() {
     <div className={styles.page}>
       <main className={styles.main}>
         <div>Pixel Art Board</div>
-        <SizeSelector
-          selectedSize={selectedSize}
-          setSelectedSize={setSelectedSize}
-        />
+        {selectedSize && (
+          <SizeSelector
+            selectedSize={selectedSize}
+            setSelectedSize={setSelectedSize}
+          />
+        )}
         <div className={styles.canvas}>
           <ColorPicker
             currentColor={currentColor}

@@ -27,10 +27,11 @@ export const PixelGrid = ({ currentColor, selectedSize }: PixelGridProps) => {
   const [pixels, setPixels] = useState<string[][] | undefined>(undefined);
   const [showModal, setShowModal] = useState(false);
 
-  const currentSize = canvasSizeMap.get(selectedSize) ?? 32;
+  const currentSize = canvasSizeMap.get(selectedSize ?? "medium") ?? 32;
 
   useEffect(() => {
     if (typeof window === "undefined") return;
+    if (!selectedSize) return;
     const stored = window.localStorage.getItem(selectedSize);
 
     if (!stored) {
@@ -38,9 +39,12 @@ export const PixelGrid = ({ currentColor, selectedSize }: PixelGridProps) => {
       return;
     }
 
-    const parsed = JSON.parse(stored);
-
-    setPixels(parsed);
+    try {
+      const parsed = JSON.parse(stored);
+      setPixels(parsed);
+    } catch {
+      setPixels(createEmptyCanvas(currentSize));
+    }
   }, [currentSize, selectedSize]);
 
   useEffect(() => {
@@ -104,7 +108,6 @@ export const PixelGrid = ({ currentColor, selectedSize }: PixelGridProps) => {
         )}
       </div>
       <ClearCanvas handleClearCanvasClick={handleClearCanvasClick} />
-
       {showModal && (
         <Modal isShown={showModal} onCancel={() => setShowModal(false)}>
           <ClearConfirmation
