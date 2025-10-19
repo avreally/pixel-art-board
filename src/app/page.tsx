@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { PixelGrid } from "@/components/PixelGrid/PixelGrid";
 import { ColorPicker } from "@/components/ColorPicker/ColorPicker";
 import { SizeSelector } from "@/components/SizeSelector/SizeSelector";
+import styles from "./page.module.css";
 
 export default function Home() {
   const [currentColor, setCurrentColor] = useState("");

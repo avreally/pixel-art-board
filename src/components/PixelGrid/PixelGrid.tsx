@@ -1,6 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
 import clsx from "clsx";
+import { ClearConfirmation } from "@/components/ClearConfirmation/ClearConfirmation";
+import { ClearCanvas } from "@/components/ClearCanvas/ClearCanvas";
+import { Modal } from "@/components/Modal/Modal";
 import styles from "./PixelGrid.module.css";
 
 type PixelGridProps = {
@@ -22,6 +25,7 @@ function createEmptyCanvas(size: number) {
 
 export const PixelGrid = ({ currentColor, selectedSize }: PixelGridProps) => {
   const [pixels, setPixels] = useState<string[][] | undefined>(undefined);
+  const [showModal, setShowModal] = useState(false);
 
   const currentSize = canvasSizeMap.get(selectedSize) ?? 32;
 
@@ -46,6 +50,15 @@ export const PixelGrid = ({ currentColor, selectedSize }: PixelGridProps) => {
       window.localStorage.setItem(selectedSize, JSON.stringify(pixels));
     }
   }, [selectedSize, pixels]);
+
+  function clearCanvas(currentSize: number) {
+    setShowModal(false);
+    setPixels(createEmptyCanvas(currentSize));
+  }
+
+  function handleClearCanvasClick() {
+    setShowModal(true);
+  }
 
   if (!pixels) {
     return (
@@ -90,6 +103,16 @@ export const PixelGrid = ({ currentColor, selectedSize }: PixelGridProps) => {
           ))
         )}
       </div>
+      <ClearCanvas handleClearCanvasClick={handleClearCanvasClick} />
+
+      {showModal && (
+        <Modal isShown={showModal} onCancel={() => setShowModal(false)}>
+          <ClearConfirmation
+            onConfirm={() => clearCanvas(currentSize)}
+            onCancel={() => setShowModal(false)}
+          />
+        </Modal>
+      )}
     </div>
   );
 };
