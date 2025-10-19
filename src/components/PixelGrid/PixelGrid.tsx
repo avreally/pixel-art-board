@@ -5,7 +5,7 @@ import styles from "./PixelGrid.module.css";
 
 type PixelGridProps = {
   currentColor: string;
-  selectedSize: string;
+  selectedSize: string | undefined;
 };
 
 const canvasSizeMap = new Map([
@@ -21,15 +21,46 @@ function createEmptyCanvas(size: number) {
 }
 
 export const PixelGrid = ({ currentColor, selectedSize }: PixelGridProps) => {
+  const [pixels, setPixels] = useState<string[][] | undefined>(undefined);
+
   const currentSize = canvasSizeMap.get(selectedSize) ?? 32;
 
-  const [pixels, setPixels] = useState(createEmptyCanvas(currentSize));
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const stored = window.localStorage.getItem(selectedSize);
+
+    if (!stored) {
+      setPixels(createEmptyCanvas(currentSize));
+      return;
+    }
+
+    const parsed = JSON.parse(stored);
+
+    setPixels(parsed);
+  }, [currentSize, selectedSize]);
 
   useEffect(() => {
-    setPixels(createEmptyCanvas(currentSize));
-  }, [currentSize]);
+    if (typeof window === "undefined") return;
+
+    if (selectedSize) {
+      window.localStorage.setItem(selectedSize, JSON.stringify(pixels));
+    }
+  }, [selectedSize, pixels]);
+
+  if (!pixels) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.loaderWrapper}>
+          <div className={styles.loader}>🎨</div>
+        </div>
+      </div>
+    );
+  }
 
   function paintCell(rowIndex: number, columnIndex: number) {
+    if (!pixels) {
+      return;
+    }
     const newPixels = [...pixels];
     newPixels[rowIndex] = [...newPixels[rowIndex]];
     newPixels[rowIndex][columnIndex] =
