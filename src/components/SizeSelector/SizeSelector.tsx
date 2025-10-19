@@ -3,14 +3,19 @@ import { Dispatch, SetStateAction } from "react";
 import styles from "./SizeSelector.module.css";
 
 type SizeSelectorProps = {
-  selectedSize: string;
-  setSelectedSize: Dispatch<SetStateAction<string>>;
+  selectedSize: string | undefined;
+  setSelectedSize: Dispatch<SetStateAction<string | undefined>>;
 };
 
 export const SizeSelector = ({
   selectedSize,
   setSelectedSize,
 }: SizeSelectorProps) => {
+  function setSize(event: React.ChangeEvent<HTMLSelectElement>) {
+    setSelectedSize(event.target.value);
+    window.localStorage.setItem("storedSize", event.target.value);
+  }
+
   return (
     <div className={styles.wrapper}>
       Select canvas size:
@@ -18,7 +23,7 @@ export const SizeSelector = ({
         name="size"
         id="size"
         value={selectedSize}
-        onChange={(event) => setSelectedSize(event.target.value)}
+        onChange={(event) => setSize(event)}
       >
         <option value="small">Small</option>
         <option value="medium">Medium</option>
