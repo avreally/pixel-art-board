@@ -31,7 +31,10 @@ export const ColorPicker = ({
           className={styles.color}
           style={{
             backgroundColor: color,
-            border: currentColor === color ? "2px solid black" : "none",
+            border:
+              currentColor === color ? "2px solid hsl(307, 40%, 66%)" : "",
+            boxShadow:
+              currentColor === color ? "0 0 4px 0px hsl(258, 80%, 30%)" : "",
           }}
           onClick={() => setCurrentColor(color)}
         ></button>

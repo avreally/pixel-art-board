@@ -18,7 +18,10 @@ export const ClearConfirmation = ({
       </p>
 
       <div className={styles.buttons}>
-        <button className={clsx(styles.button)} onClick={onCancel}>
+        <button
+          className={clsx(styles.button, styles.cancel)}
+          onClick={onCancel}
+        >
           Cancel
         </button>
         <button

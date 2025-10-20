@@ -1,5 +1,4 @@
 .wrapper {
-  box-shadow: 0 0 0 1px #cdcdcd;
   height: 100%;
 }
 
@@ -25,11 +24,11 @@
   height: 1rem;
   appearance: none;
   cursor: pointer;
-  border: 1px solid #cdcdcd;
+  border: 1px solid hsl(258, 10%, 80%);
 }
 
 .cell:hover {
-  border-color: #828282;
+  border-color: hsl(258, 10%, 40%);
 }
 
 .container {

@@ -24,6 +24,7 @@ export const SizeSelector = ({
         id="size"
         value={selectedSize}
         onChange={(event) => setSize(event)}
+        className={styles.select}
       >
         <option value="small">Small</option>
         <option value="medium">Medium</option>

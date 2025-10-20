@@ -1,38 +1,38 @@
 .page {
-  --gray-rgb: 0, 0, 0;
-  --gray-alpha-200: rgba(var(--gray-rgb), 0.08);
-  --gray-alpha-100: rgba(var(--gray-rgb), 0.05);
-
-  --button-primary-hover: #383838;
-  --button-secondary-hover: #f2f2f2;
-
   font-family: var(--font-geist-sans);
-
   display: flex;
   flex-direction: column;
-  padding: 4rem;
-}
-
-@media (prefers-color-scheme: dark) {
-  .page {
-    --gray-rgb: 255, 255, 255;
-    --gray-alpha-200: rgba(var(--gray-rgb), 0.145);
-    --gray-alpha-100: rgba(var(--gray-rgb), 0.06);
-
-    --button-primary-hover: #ccc;
-    --button-secondary-hover: #1a1a1a;
-  }
+  padding: 2rem 4rem;
+  min-height: 100vh;
 }
 
 .main {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  height: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 2rem;
+}
+
+.logo {
+  width: 20rem;
+  height: auto;
+  fill: hsl(307, 40%, 66%);
 }
 
 .canvas {
   display: flex;
   gap: 2rem;
+  padding: 2rem;
+  height: 100%;
+  background-color: hsl(258, 29%, 30%);
+  border: 1px solid hsl(283, 34%, 60%);
+  border-radius: 2px;
+  position: relative;
 }
 
 /* Enable hover only on non-touch devices */
