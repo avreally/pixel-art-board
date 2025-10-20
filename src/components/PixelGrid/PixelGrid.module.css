@@ -1,3 +1,7 @@
+.container {
+  overflow: scroll;
+}
+
 .wrapper {
   height: 100%;
 }
@@ -31,9 +35,9 @@
   border-color: hsl(258, 10%, 40%);
 }
 
-.container {
-  width: 16rem;
-  height: 16rem;
+.loaderContainer {
+  padding: 2rem;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;

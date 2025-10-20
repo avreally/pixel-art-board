@@ -8,7 +8,7 @@ type ClearCanvasProps = {
 export const ClearCanvas = ({ handleClearCanvasClick }: ClearCanvasProps) => {
   return (
     <button className={styles.button} onClick={handleClearCanvasClick}>
-      Clear canvas
+      Clear
     </button>
   );
 };

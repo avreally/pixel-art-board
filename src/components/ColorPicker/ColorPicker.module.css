@@ -1,27 +1,44 @@
 .wrapper,
 .color {
-  border-radius: 2px;
+  border-radius: 6px;
 }
 
 .wrapper {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   gap: 2px;
   height: auto;
-  padding: 2rem;
+  padding: 1rem;
   background-color: hsl(258, 29%, 40%);
   border: 1px solid hsl(283, 34%, 60%);
 }
 
 .color {
-  width: 2rem;
-  height: 2rem;
+  width: 1.75rem;
+  height: 1.75rem;
   appearance: none;
   cursor: pointer;
   border: none;
+  flex-shrink: 0;
 }
 
 .color:hover {
   border: 2px solid hsl(1, 100%, 88%);
   box-shadow: 0 0 4px 0px hsl(332, 86%, 80%);
+}
+
+@media (min-width: 480px) {
+  .color {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .wrapper {
+    padding: 1.5rem;
+
+    flex-direction: column;
+  }
 }
