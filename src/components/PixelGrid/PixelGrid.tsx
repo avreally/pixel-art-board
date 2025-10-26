@@ -5,6 +5,7 @@ import { ClearConfirmation } from "@/components/ClearConfirmation/ClearConfirmat
 import { ClearCanvas } from "@/components/ClearCanvas/ClearCanvas";
 import { Modal } from "@/components/Modal/Modal";
 import styles from "./PixelGrid.module.css";
+import { createPortal } from "react-dom";
 
 type PixelGridProps = {
   currentColor: string;
@@ -27,10 +28,16 @@ export const PixelGrid = ({ currentColor, selectedSize }: PixelGridProps) => {
   const [pixels, setPixels] = useState<string[][] | undefined>(undefined);
   const [showModal, setShowModal] = useState(false);
 
-  const currentSize = canvasSizeMap.get(selectedSize) ?? 32;
+  const clearButtonElement =
+    typeof window !== "undefined"
+      ? document.getElementById("pixelgrid-clear-button")
+      : undefined;
+
+  const currentSize = canvasSizeMap.get(selectedSize ?? "medium") ?? 32;
 
   useEffect(() => {
     if (typeof window === "undefined") return;
+    if (!selectedSize) return;
     const stored = window.localStorage.getItem(selectedSize);
 
     if (!stored) {
@@ -38,15 +45,18 @@ export const PixelGrid = ({ currentColor, selectedSize }: PixelGridProps) => {
       return;
     }
 
-    const parsed = JSON.parse(stored);
-
-    setPixels(parsed);
+    try {
+      const parsed = JSON.parse(stored);
+      setPixels(parsed);
+    } catch {
+      setPixels(createEmptyCanvas(currentSize));
+    }
   }, [currentSize, selectedSize]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    if (selectedSize) {
+    if (selectedSize && pixels) {
       window.localStorage.setItem(selectedSize, JSON.stringify(pixels));
     }
   }, [selectedSize, pixels]);
@@ -62,7 +72,7 @@ export const PixelGrid = ({ currentColor, selectedSize }: PixelGridProps) => {
 
   if (!pixels) {
     return (
-      <div className={styles.container}>
+      <div className={styles.loaderContainer}>
         <div className={styles.loaderWrapper}>
           <div className={styles.loader}>🎨</div>
         </div>
@@ -84,35 +94,37 @@ export const PixelGrid = ({ currentColor, selectedSize }: PixelGridProps) => {
   }
 
   return (
-    <div
-      className={clsx(styles.wrapper, {
-        [styles.small]: selectedSize === "small",
-        [styles.medium]: selectedSize === "medium",
-        [styles.large]: selectedSize === "large",
-      })}
-    >
-      <div className={styles.grid}>
-        {pixels.map((row, rowIndex) =>
-          row.map((pixel, columnIndex) => (
-            <button
-              className={styles.cell}
-              style={{ backgroundColor: pixel }}
-              key={`${rowIndex}_${columnIndex}`}
-              onClick={() => paintCell(rowIndex, columnIndex)}
-            ></button>
-          ))
+    <div className={styles.container}>
+      <div
+        className={styles.wrapper}
+        style={{ width: `${pixels[0].length}rem` }}
+      >
+        <div className={styles.grid}>
+          {pixels.map((row, rowIndex) =>
+            row.map((pixel, columnIndex) => (
+              <button
+                className={styles.cell}
+                style={{ backgroundColor: pixel }}
+                key={`${rowIndex}_${columnIndex}`}
+                onClick={() => paintCell(rowIndex, columnIndex)}
+              ></button>
+            ))
+          )}
+        </div>
+        {clearButtonElement &&
+          createPortal(
+            <ClearCanvas handleClearCanvasClick={handleClearCanvasClick} />,
+            clearButtonElement
+          )}
+        {showModal && (
+          <Modal isShown={showModal} onCancel={() => setShowModal(false)}>
+            <ClearConfirmation
+              onConfirm={() => clearCanvas(currentSize)}
+              onCancel={() => setShowModal(false)}
+            />
+          </Modal>
         )}
       </div>
-      <ClearCanvas handleClearCanvasClick={handleClearCanvasClick} />
-
-      {showModal && (
-        <Modal isShown={showModal} onCancel={() => setShowModal(false)}>
-          <ClearConfirmation
-            onConfirm={() => clearCanvas(currentSize)}
-            onCancel={() => setShowModal(false)}
-          />
-        </Modal>
-      )}
     </div>
   );
 };
