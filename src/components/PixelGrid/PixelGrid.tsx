@@ -56,7 +56,7 @@ export const PixelGrid = ({ currentColor, selectedSize }: PixelGridProps) => {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    if (selectedSize) {
+    if (selectedSize && pixels) {
       window.localStorage.setItem(selectedSize, JSON.stringify(pixels));
     }
   }, [selectedSize, pixels]);
@@ -96,11 +96,8 @@ export const PixelGrid = ({ currentColor, selectedSize }: PixelGridProps) => {
   return (
     <div className={styles.container}>
       <div
-        className={clsx(styles.wrapper, {
-          [styles.small]: selectedSize === "small",
-          [styles.medium]: selectedSize === "medium",
-          [styles.large]: selectedSize === "large",
-        })}
+        className={styles.wrapper}
+        style={{ width: `${pixels[0].length}rem` }}
       >
         <div className={styles.grid}>
           {pixels.map((row, rowIndex) =>

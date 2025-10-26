@@ -11,18 +11,6 @@
   flex-wrap: wrap;
 }
 
-.small {
-  width: 16rem;
-}
-
-.medium {
-  width: 32rem;
-}
-
-.large {
-  width: 40rem;
-}
-
 .cell {
   width: 1rem;
   height: 1rem;
