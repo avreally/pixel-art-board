@@ -41,8 +41,12 @@ export const PixelGrid = ({ currentColor, selectedSize }: PixelGridProps) => {
   const currentSize = canvasSizeMap.get(selectedSize ?? "medium") ?? 32;
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    if (!selectedSize) return;
+    if (typeof window === "undefined") {
+      return;
+    }
+    if (!selectedSize) {
+      return;
+    }
     const stored = window.localStorage.getItem(selectedSize);
 
     if (!stored) {

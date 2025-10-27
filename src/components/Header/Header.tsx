@@ -9,8 +9,9 @@ type HeaderProps = {
 
 export const Header = ({ selectedSize, setSelectedSize }: HeaderProps) => {
   function setSize(event: React.ChangeEvent<HTMLSelectElement>) {
-    setSelectedSize(event.target.value);
-    window.localStorage.setItem("storedSize", event.target.value);
+    const size = event.target.value;
+    setSelectedSize(size);
+    window.localStorage.setItem("storedSize", size);
   }
 
   return (
