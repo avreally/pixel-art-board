@@ -5,10 +5,14 @@ body {
   background-color: hsl(258, 29%, 30%);
 }
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
+body,
+input,
+select,
+button {
+  font-family: var(--font-rubik), Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
 }
 
 * {

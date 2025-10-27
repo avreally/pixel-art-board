@@ -6,23 +6,41 @@
   gap: 1rem;
   padding: 1rem;
   min-height: 4rem;
-  background-color: hsl(258, 29%, 40%);
   border: 2px solid hsl(283, 34%, 60%);
   margin-bottom: 1rem;
   color: #fff;
   border-radius: 6px;
+  position: relative;
 }
 
 .select {
   padding: 0.25rem 0.5rem;
   border: 1px solid hsl(283, 34%, 60%);
-  border-radius: 2px;
+  border-radius: 4px;
 }
 
 .sizeControl {
   display: flex;
   align-items: center;
   gap: 1rem;
+  z-index: 1;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  order: -1;
+}
+
+.logo {
+  width: 20rem;
+  height: auto;
+  fill: hsl(307, 40%, 66%);
+}
+
+.clearButton {
+  z-index: 1;
 }
 
 @media (min-width: 480px) {
@@ -35,5 +53,13 @@
 @media (min-width: 768px) {
   .wrapper {
     margin-bottom: 2rem;
+  }
+
+  .header {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    position: absolute;
+    left: 0;
   }
 }
