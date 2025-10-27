@@ -18,7 +18,7 @@ export const SizeSelector = ({
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.sizeControl}>
+      <label className={styles.sizeControl}>
         Canvas size:
         {selectedSize && (
           <select
@@ -33,7 +33,7 @@ export const SizeSelector = ({
             <option value="large">Large</option>
           </select>
         )}
-      </div>
+      </label>
       <div id="pixelgrid-clear-button" />
     </div>
   );

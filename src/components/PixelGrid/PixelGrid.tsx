@@ -107,12 +107,12 @@ export const PixelGrid = ({ currentColor, selectedSize }: PixelGridProps) => {
         <div className={styles.grid}>
           {pixels.map((row, rowIndex) =>
             row.map((pixel, columnIndex) => (
-              <button
+              <div
                 className={styles.cell}
                 style={{ backgroundColor: pixel }}
                 key={`${rowIndex}_${columnIndex}`}
                 onClick={() => paintCell(rowIndex, columnIndex)}
-              ></button>
+              ></div>
             ))
           )}
         </div>

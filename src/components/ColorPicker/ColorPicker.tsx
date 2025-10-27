@@ -27,6 +27,7 @@ export const ColorPicker = ({
     <div className={styles.wrapper}>
       {colors.map((color, index) => (
         <button
+          aria-label={`Select color ${color}`}
           key={index}
           className={styles.color}
           style={{
