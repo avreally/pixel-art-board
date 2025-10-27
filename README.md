@@ -16,7 +16,7 @@ The canvas, color palette, and controls are implemented as separate reusable com
 ## Deployment
 
 The project is deployed on **Vercel**.  
-You can try it live here:
+You can try it live here: [https://pixel-art-board-avreally.vercel.app/](https://pixel-art-board-avreally.vercel.app/)
 
 ## Installation
 
