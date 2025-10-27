@@ -1,11 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
-import clsx from "clsx";
 import { ClearConfirmation } from "@/components/ClearConfirmation/ClearConfirmation";
 import { ClearCanvas } from "@/components/ClearCanvas/ClearCanvas";
 import { Modal } from "@/components/Modal/Modal";
-import styles from "./PixelGrid.module.css";
 import { createPortal } from "react-dom";
+import { DownloadCanvas } from "../DownloadCanvas/DownloadCanvas";
+import styles from "./PixelGrid.module.css";
 
 type PixelGridProps = {
   currentColor: string;
@@ -31,6 +31,11 @@ export const PixelGrid = ({ currentColor, selectedSize }: PixelGridProps) => {
   const clearButtonElement =
     typeof window !== "undefined"
       ? document.getElementById("pixelgrid-clear-button")
+      : undefined;
+
+  const downloadButtonElement =
+    typeof window !== "undefined"
+      ? document.getElementById("pixelgrid-download-button")
       : undefined;
 
   const currentSize = canvasSizeMap.get(selectedSize ?? "medium") ?? 32;
@@ -102,12 +107,12 @@ export const PixelGrid = ({ currentColor, selectedSize }: PixelGridProps) => {
         <div className={styles.grid}>
           {pixels.map((row, rowIndex) =>
             row.map((pixel, columnIndex) => (
-              <button
+              <div
                 className={styles.cell}
                 style={{ backgroundColor: pixel }}
                 key={`${rowIndex}_${columnIndex}`}
                 onClick={() => paintCell(rowIndex, columnIndex)}
-              ></button>
+              ></div>
             ))
           )}
         </div>
@@ -115,6 +120,11 @@ export const PixelGrid = ({ currentColor, selectedSize }: PixelGridProps) => {
           createPortal(
             <ClearCanvas handleClearCanvasClick={handleClearCanvasClick} />,
             clearButtonElement
+          )}
+        {downloadButtonElement &&
+          createPortal(
+            <DownloadCanvas pixels={pixels} />,
+            downloadButtonElement
           )}
         {showModal && (
           <Modal isShown={showModal} onCancel={() => setShowModal(false)}>

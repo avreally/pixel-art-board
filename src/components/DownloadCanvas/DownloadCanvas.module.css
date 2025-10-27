@@ -1,0 +1,16 @@
+.canvas {
+  display: none;
+}
+
+.button {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border: 1px solid hsl(327, 73%, 76%);
+  background-color: hsl(18, 100%, 88%);
+  transition: all 0.3s;
+  border-radius: 2px;
+}
+
+.button:hover {
+  background-color: hsl(18, 100%, 75%);
+}
