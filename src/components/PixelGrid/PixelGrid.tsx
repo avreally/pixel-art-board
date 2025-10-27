@@ -1,11 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
-import clsx from "clsx";
 import { ClearConfirmation } from "@/components/ClearConfirmation/ClearConfirmation";
 import { ClearCanvas } from "@/components/ClearCanvas/ClearCanvas";
 import { Modal } from "@/components/Modal/Modal";
-import styles from "./PixelGrid.module.css";
 import { createPortal } from "react-dom";
+import { DownloadCanvas } from "../DownloadCanvas/DownloadCanvas";
+import styles from "./PixelGrid.module.css";
 
 type PixelGridProps = {
   currentColor: string;
@@ -116,6 +116,7 @@ export const PixelGrid = ({ currentColor, selectedSize }: PixelGridProps) => {
             <ClearCanvas handleClearCanvasClick={handleClearCanvasClick} />,
             clearButtonElement
           )}
+        <DownloadCanvas pixels={pixels} />
         {showModal && (
           <Modal isShown={showModal} onCancel={() => setShowModal(false)}>
             <ClearConfirmation
