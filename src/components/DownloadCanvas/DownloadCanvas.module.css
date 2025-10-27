@@ -4,7 +4,6 @@
 
 .button {
   padding: 0.5rem 1rem;
-  margin-top: 2rem;
   cursor: pointer;
   border: 1px solid hsl(327, 73%, 76%);
   background-color: hsl(18, 100%, 88%);
@@ -13,6 +12,5 @@
 }
 
 .button:hover {
-  background-color: hsl(262, 33%, 56%);
-  color: hsl(0, 0%, 100%);
+  background-color: hsl(18, 100%, 75%);
 }

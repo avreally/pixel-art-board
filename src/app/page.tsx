@@ -6,7 +6,7 @@ import { SizeSelector } from "@/components/SizeSelector/SizeSelector";
 import styles from "./page.module.css";
 
 export default function Home() {
-  const [currentColor, setCurrentColor] = useState("");
+  const [currentColor, setCurrentColor] = useState("white");
   const [selectedSize, setSelectedSize] = useState<string | undefined>(
     undefined
   );
@@ -51,6 +51,7 @@ export default function Home() {
           />
           <PixelGrid currentColor={currentColor} selectedSize={selectedSize} />
         </div>
+        <div className={styles.download} id="pixelgrid-download-button" />
       </main>
     </div>
   );

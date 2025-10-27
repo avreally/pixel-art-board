@@ -33,6 +33,11 @@ export const PixelGrid = ({ currentColor, selectedSize }: PixelGridProps) => {
       ? document.getElementById("pixelgrid-clear-button")
       : undefined;
 
+  const downloadButtonElement =
+    typeof window !== "undefined"
+      ? document.getElementById("pixelgrid-download-button")
+      : undefined;
+
   const currentSize = canvasSizeMap.get(selectedSize ?? "medium") ?? 32;
 
   useEffect(() => {
@@ -116,7 +121,11 @@ export const PixelGrid = ({ currentColor, selectedSize }: PixelGridProps) => {
             <ClearCanvas handleClearCanvasClick={handleClearCanvasClick} />,
             clearButtonElement
           )}
-        <DownloadCanvas pixels={pixels} />
+        {downloadButtonElement &&
+          createPortal(
+            <DownloadCanvas pixels={pixels} />,
+            downloadButtonElement
+          )}
         {showModal && (
           <Modal isShown={showModal} onCancel={() => setShowModal(false)}>
             <ClearConfirmation
