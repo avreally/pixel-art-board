@@ -6,7 +6,7 @@ import { Header } from "@/components/Header/Header";
 import styles from "./page.module.css";
 
 export default function Home() {
-  const [currentColor, setCurrentColor] = useState("white");
+  const [currentColor, setCurrentColor] = useState("transparent");
   const [selectedSize, setSelectedSize] = useState<string | undefined>(
     undefined
   );

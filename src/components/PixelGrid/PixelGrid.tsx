@@ -5,6 +5,7 @@ import { ClearCanvas } from "@/components/ClearCanvas/ClearCanvas";
 import { Modal } from "@/components/Modal/Modal";
 import { createPortal } from "react-dom";
 import { DownloadCanvas } from "../DownloadCanvas/DownloadCanvas";
+import { get, set, del } from "idb-keyval";
 import styles from "./PixelGrid.module.css";
 
 type PixelGridProps = {
@@ -20,13 +21,35 @@ const canvasSizeMap = new Map([
 
 function createEmptyCanvas(size: number) {
   return Array.from({ length: size }, () =>
-    Array.from({ length: size }, () => "white")
+    Array.from({ length: size }, () => "transparent")
   );
 }
 
 export const PixelGrid = ({ currentColor, selectedSize }: PixelGridProps) => {
   const [pixels, setPixels] = useState<string[][] | undefined>(undefined);
   const [showModal, setShowModal] = useState(false);
+  const [referenceImage, setReferenceImage] = useState<string | null>(null);
+
+  async function handleImageUpload(event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    if (!file) {
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = async () => {
+      if (typeof reader.result === "string") {
+        setReferenceImage(reader.result);
+        await set(`referenceImage-${selectedSize}`, reader.result);
+      }
+    };
+    reader.readAsDataURL(file);
+  }
+
+  async function handleImageRemove() {
+    await del(`referenceImage-${selectedSize}`);
+    setReferenceImage(null);
+  }
 
   const clearButtonElement =
     typeof window !== "undefined"
@@ -70,6 +93,21 @@ export const PixelGrid = ({ currentColor, selectedSize }: PixelGridProps) => {
     }
   }, [selectedSize, pixels]);
 
+  useEffect(() => {
+    if (!selectedSize) {
+      return;
+    }
+
+    (async () => {
+      const stored = await get(`referenceImage-${selectedSize}`);
+      if (stored) {
+        setReferenceImage(stored);
+      } else {
+        setReferenceImage(null);
+      }
+    })();
+  }, [selectedSize]);
+
   function clearCanvas(currentSize: number) {
     setShowModal(false);
     setPixels(createEmptyCanvas(currentSize));
@@ -97,16 +135,27 @@ export const PixelGrid = ({ currentColor, selectedSize }: PixelGridProps) => {
     newPixels[rowIndex] = [...newPixels[rowIndex]];
     newPixels[rowIndex][columnIndex] =
       newPixels[rowIndex][columnIndex] === currentColor
-        ? "white"
+        ? "transparent"
         : currentColor;
     setPixels(newPixels);
   }
 
   return (
     <div className={styles.container}>
+      <input type="file" accept="image/*" onChange={handleImageUpload} />
+      <button className={styles.button} onClick={handleImageRemove}>
+        Delete
+      </button>
       <div
         className={styles.wrapper}
-        style={{ width: `${pixels[0].length}rem` }}
+        style={{
+          width: `${pixels[0].length}rem`,
+          backgroundImage: referenceImage ? `url(${referenceImage})` : "none",
+          backgroundSize: "100% auto",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+          backgroundColor: referenceImage ?? "white",
+        }}
       >
         <div className={styles.grid}>
           {pixels.map((row, rowIndex) =>

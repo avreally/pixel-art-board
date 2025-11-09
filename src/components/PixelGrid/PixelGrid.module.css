@@ -42,6 +42,21 @@
   animation: spin 1.5s linear infinite;
 }
 
+.button {
+  width: 6.5rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 2px;
+  border: 1px solid hsl(307, 40%, 66%);
+  background-color: hsl(341, 70%, 80%);
+  transition: all 0.3s;
+}
+
+.button:hover {
+  background-color: hsl(341, 80%, 45%);
+  color: #fff;
+}
+
 @keyframes spin {
   to {
     transform: rotate(360deg);
