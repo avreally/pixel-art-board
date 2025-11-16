@@ -35,6 +35,8 @@
 
   .canvas {
     gap: 1.5rem;
+    flex-direction: row;
+    justify-content: space-between;
   }
 
   .download {
