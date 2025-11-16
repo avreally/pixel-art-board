@@ -1,5 +1,6 @@
 "use client";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import clsx from "clsx";
 import styles from "./ColorPicker.module.css";
 
 type ColorPickerProps = {
@@ -261,7 +262,7 @@ export const ColorPicker = ({
             <button
               aria-label={`Select color ${color}`}
               key={index}
-              className={styles.color}
+              className={styles.paletteItem}
               style={{
                 backgroundColor: color,
                 border:
@@ -279,7 +280,7 @@ export const ColorPicker = ({
           <label className={styles.colorControl}>
             <div className={styles.divider} />
             <input
-              className={styles.customColor}
+              className={clsx(styles.paletteItem, styles.customColor)}
               type="color"
               value={currentColor}
               onChange={(event) => setCurrentColor(event.target.value)}
@@ -288,7 +289,7 @@ export const ColorPicker = ({
           <div className={styles.eraserContainer}>
             <div className={styles.divider} />
             <button
-              className={styles.eraser}
+              className={clsx(styles.paletteItem, styles.eraser)}
               value={currentColor}
               onClick={() => setCurrentColor("transparent")}
               style={{
