@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ClearConfirmation } from "@/components/ClearConfirmation/ClearConfirmation";
 import { ClearCanvas } from "@/components/ClearCanvas/ClearCanvas";
 import { Modal } from "@/components/Modal/Modal";
@@ -29,6 +29,7 @@ export const PixelGrid = ({ currentColor, selectedSize }: PixelGridProps) => {
   const [pixels, setPixels] = useState<string[][] | undefined>(undefined);
   const [showModal, setShowModal] = useState(false);
   const [referenceImage, setReferenceImage] = useState<string | null>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
 
   async function handleImageUpload(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
@@ -48,6 +49,9 @@ export const PixelGrid = ({ currentColor, selectedSize }: PixelGridProps) => {
 
   async function handleImageRemove() {
     await del(`referenceImage-${selectedSize}`);
+    if (fileRef.current) {
+      fileRef.current.value = "";
+    }
     setReferenceImage(null);
   }
 
@@ -98,12 +102,11 @@ export const PixelGrid = ({ currentColor, selectedSize }: PixelGridProps) => {
       return;
     }
 
+    setReferenceImage(null);
     (async () => {
       const stored = await get(`referenceImage-${selectedSize}`);
       if (stored) {
         setReferenceImage(stored);
-      } else {
-        setReferenceImage(null);
       }
     })();
   }, [selectedSize]);
@@ -142,10 +145,26 @@ export const PixelGrid = ({ currentColor, selectedSize }: PixelGridProps) => {
 
   return (
     <div className={styles.container}>
-      <input type="file" accept="image/*" onChange={handleImageUpload} />
-      <button className={styles.button} onClick={handleImageRemove}>
-        Delete
-      </button>
+      <div className={styles.uploadSection}>
+        <div className={styles.uploadContainer}>
+          <label>
+            <input
+              type="file"
+              accept="image/png, image/jpeg, image/jpg, image/gif, image/webp"
+              onChange={handleImageUpload}
+              className={styles.hiddenInput}
+              ref={fileRef}
+            />
+            <div className={styles.uploadButton}>
+              {referenceImage ? "Change image" : "Choose image"}
+            </div>
+          </label>
+          {referenceImage && <p className={styles.fileName}>Image uploaded</p>}
+        </div>
+        <button className={styles.button} onClick={handleImageRemove}>
+          Delete
+        </button>
+      </div>
       <div
         className={styles.wrapper}
         style={{

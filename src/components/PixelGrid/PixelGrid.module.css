@@ -43,8 +43,7 @@
 }
 
 .button {
-  width: 6.5rem;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem;
   cursor: pointer;
   border-radius: 2px;
   border: 1px solid hsl(307, 40%, 66%);
@@ -55,6 +54,42 @@
 .button:hover {
   background-color: hsl(341, 80%, 45%);
   color: #fff;
+}
+
+.uploadSection {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.uploadContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.hiddenInput {
+  display: none;
+}
+
+.uploadButton {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border: 1px solid hsl(327, 73%, 76%);
+  background-color: hsl(18, 100%, 88%);
+  transition: all 0.3s;
+  border-radius: 2px;
+}
+
+.uploadButton:hover {
+  background-color: hsl(18, 100%, 75%);
+}
+
+.fileName {
+  color: #fff;
+  padding: 0.5rem 1rem;
 }
 
 @keyframes spin {
