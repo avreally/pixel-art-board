@@ -27,7 +27,8 @@ function createEmptyCanvas(size: number) {
 
 export const PixelGrid = ({ currentColor, selectedSize }: PixelGridProps) => {
   const [pixels, setPixels] = useState<string[][] | undefined>(undefined);
-  const [showModal, setShowModal] = useState(false);
+  const [showClearCanvasModal, setShowClearCanvasModal] = useState(false);
+  const [showDeleteImageModal, setShowDeleteImageModal] = useState(false);
   const [referenceImage, setReferenceImage] = useState<string | null>(null);
   const [paintActive, setPaintActive] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
@@ -54,6 +55,7 @@ export const PixelGrid = ({ currentColor, selectedSize }: PixelGridProps) => {
       fileRef.current.value = "";
     }
     setReferenceImage(null);
+    setShowDeleteImageModal(false);
   }
 
   const clearButtonElement =
@@ -118,12 +120,12 @@ export const PixelGrid = ({ currentColor, selectedSize }: PixelGridProps) => {
   }, [selectedSize]);
 
   function clearCanvas(currentSize: number) {
-    setShowModal(false);
+    setShowClearCanvasModal(false);
     setPixels(createEmptyCanvas(currentSize));
   }
 
   function handleClearCanvasClick() {
-    setShowModal(true);
+    setShowClearCanvasModal(true);
   }
 
   if (!pixels) {
@@ -177,7 +179,10 @@ export const PixelGrid = ({ currentColor, selectedSize }: PixelGridProps) => {
           </label>
           {referenceImage && <p className={styles.fileName}>Image uploaded</p>}
         </div>
-        <button className={styles.button} onClick={handleImageRemove}>
+        <button
+          className={styles.button}
+          onClick={() => setShowDeleteImageModal(true)}
+        >
           Delete
         </button>
       </div>
@@ -219,14 +224,30 @@ export const PixelGrid = ({ currentColor, selectedSize }: PixelGridProps) => {
             <DownloadCanvas pixels={pixels} />,
             downloadButtonElement
           )}
-        {showModal && (
-          <Modal isShown={showModal} onCancel={() => setShowModal(false)}>
-            <ClearConfirmation
-              onConfirm={() => clearCanvas(currentSize)}
-              onCancel={() => setShowModal(false)}
-            />
-          </Modal>
-        )}
+        <Modal
+          isShown={showClearCanvasModal}
+          onCancel={() => setShowClearCanvasModal(false)}
+        >
+          <ClearConfirmation
+            onConfirm={() => clearCanvas(currentSize)}
+            onCancel={() => setShowClearCanvasModal(false)}
+            headerText="Clear canvas?"
+            text="Are you sure you want to clear current canvas?"
+            confirmButtonText="Clear"
+          />
+        </Modal>
+        <Modal
+          isShown={showDeleteImageModal}
+          onCancel={() => setShowDeleteImageModal(false)}
+        >
+          <ClearConfirmation
+            onConfirm={handleImageRemove}
+            onCancel={() => setShowDeleteImageModal(false)}
+            headerText="Delete image?"
+            text="Are you sure you want to delete image?"
+            confirmButtonText="Delete"
+          />
+        </Modal>
       </div>
     </div>
   );

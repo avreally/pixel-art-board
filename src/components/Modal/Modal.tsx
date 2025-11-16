@@ -29,6 +29,10 @@ export const Modal = ({
     };
   }, [handleKeyUp]);
 
+  if (!isShown) {
+    return;
+  }
+
   return (
     <div className={styles.wrapper}>
       <div
