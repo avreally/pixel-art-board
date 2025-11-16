@@ -29,6 +29,7 @@ export const PixelGrid = ({ currentColor, selectedSize }: PixelGridProps) => {
   const [pixels, setPixels] = useState<string[][] | undefined>(undefined);
   const [showModal, setShowModal] = useState(false);
   const [referenceImage, setReferenceImage] = useState<string | null>(null);
+  const [paintActive, setPaintActive] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
   async function handleImageUpload(event: React.ChangeEvent<HTMLInputElement>) {
@@ -74,6 +75,11 @@ export const PixelGrid = ({ currentColor, selectedSize }: PixelGridProps) => {
     if (!selectedSize) {
       return;
     }
+
+    if (fileRef.current) {
+      fileRef.current.value = "";
+    }
+
     const stored = window.localStorage.getItem(selectedSize);
 
     if (!stored) {
@@ -136,11 +142,21 @@ export const PixelGrid = ({ currentColor, selectedSize }: PixelGridProps) => {
     }
     const newPixels = [...pixels];
     newPixels[rowIndex] = [...newPixels[rowIndex]];
-    newPixels[rowIndex][columnIndex] =
-      newPixels[rowIndex][columnIndex] === currentColor
-        ? "transparent"
-        : currentColor;
+    newPixels[rowIndex][columnIndex] = currentColor;
     setPixels(newPixels);
+  }
+
+  function handlePointerEnter(rowIndex: number, columnIndex: number) {
+    if (!paintActive) {
+      return;
+    }
+
+    paintCell(rowIndex, columnIndex);
+  }
+
+  function handlePointerDown(rowIndex: number, columnIndex: number) {
+    setPaintActive(true);
+    paintCell(rowIndex, columnIndex);
   }
 
   return (
@@ -176,14 +192,19 @@ export const PixelGrid = ({ currentColor, selectedSize }: PixelGridProps) => {
           backgroundColor: referenceImage ?? "white",
         }}
       >
-        <div className={styles.grid}>
+        <div
+          className={styles.grid}
+          onPointerLeave={() => setPaintActive(false)}
+        >
           {pixels.map((row, rowIndex) =>
             row.map((pixel, columnIndex) => (
               <div
                 className={styles.cell}
                 style={{ backgroundColor: pixel }}
                 key={`${rowIndex}_${columnIndex}`}
-                onClick={() => paintCell(rowIndex, columnIndex)}
+                onPointerDown={() => handlePointerDown(rowIndex, columnIndex)}
+                onPointerUp={() => setPaintActive(false)}
+                onPointerEnter={() => handlePointerEnter(rowIndex, columnIndex)}
               ></div>
             ))
           )}
