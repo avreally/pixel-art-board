@@ -35,8 +35,8 @@ export default function Home() {
             setCurrentColor={setCurrentColor}
           />
           <PixelGrid currentColor={currentColor} selectedSize={selectedSize} />
+          <div className={styles.wrapper} id="pixelgrid-download-button" />
         </div>
-        <div className={styles.download} id="pixelgrid-download-button" />
       </main>
     </div>
   );

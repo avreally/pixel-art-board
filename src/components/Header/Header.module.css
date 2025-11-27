@@ -51,10 +51,6 @@
 }
 
 @media (min-width: 768px) {
-  .wrapper {
-    margin-bottom: 2rem;
-  }
-
   .header {
     display: flex;
     justify-content: center;

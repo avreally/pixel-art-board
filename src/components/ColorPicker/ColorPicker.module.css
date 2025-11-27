@@ -99,7 +99,6 @@
   .wrapper {
     flex-direction: column;
     order: 1;
-    height: 100%;
   }
 
   .paletteWrapper {
