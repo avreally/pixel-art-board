@@ -4,18 +4,22 @@ import styles from "./ClearConfirmation.module.css";
 type ClearConfirmationProps = {
   onConfirm?: () => void;
   onCancel: () => void;
+  headerText: string;
+  text: string;
+  confirmButtonText: string;
 };
 
 export const ClearConfirmation = ({
   onConfirm,
   onCancel,
+  headerText,
+  text,
+  confirmButtonText,
 }: ClearConfirmationProps) => {
   return (
     <>
-      <h3 className={styles.title}>Clear canvas?</h3>
-      <p className={styles.text}>
-        Are you sure you want to clear current canvas?
-      </p>
+      <h3 className={styles.title}>{headerText}</h3>
+      <p className={styles.text}>{text}</p>
 
       <div className={styles.buttons}>
         <button
@@ -28,7 +32,7 @@ export const ClearConfirmation = ({
           className={clsx(styles.button, styles.clear)}
           onClick={onConfirm}
         >
-          Clear
+          {confirmButtonText}
         </button>
       </div>
     </>

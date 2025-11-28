@@ -1,8 +1,8 @@
 .page {
   display: flex;
   flex-direction: column;
-  padding-top: 2rem;
-  padding-bottom: 4rem;
+  padding-top: 1rem;
+  padding-bottom: 3rem;
   padding-left: 1rem;
   padding-right: 1rem;
   min-height: 100vh;
@@ -23,33 +23,32 @@
   position: relative;
 }
 
-.download {
-  margin-top: 1rem;
-}
-
-@media (min-width: 480px) {
-  .page {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
-
-  .canvas {
-    gap: 1.5rem;
-  }
-
-  .download {
-    margin-top: 1.5rem;
-  }
+.wrapper {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: hsl(258, 29%, 40%);
+  border: 1px solid hsl(283, 34%, 60%);
+  border-radius: 6px;
 }
 
 @media (min-width: 768px) {
   .page {
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding-top: 1.5rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-bottom: 4rem;
   }
 
-  .download {
-    margin-top: 2rem;
+  .canvas {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 0;
+  }
+
+  .wrapper {
+    flex-direction: column;
+    order: -1;
   }
 }
 

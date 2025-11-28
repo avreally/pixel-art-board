@@ -3,14 +3,31 @@
 }
 
 .button {
-  padding: 0.5rem 1rem;
+  width: 2rem;
+  height: 2rem;
   cursor: pointer;
   border: 1px solid hsl(327, 73%, 76%);
   background-color: hsl(18, 100%, 88%);
-  transition: all 0.3s;
+  transition: background-color 0.2s;
   border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .button:hover {
-  background-color: hsl(18, 100%, 75%);
+  background-color: hsl(258, 29%, 30%);
+}
+
+.downloadIcon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.button svg g {
+  transition: stroke 0.2s;
+}
+
+.button:hover svg g {
+  stroke: hsl(327, 73%, 76%);
 }
