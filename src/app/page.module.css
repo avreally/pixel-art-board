@@ -32,18 +32,6 @@
   border-radius: 6px;
 }
 
-@media (min-width: 480px) {
-  .canvas {
-    flex-direction: row;
-    justify-content: space-between;
-  }
-
-  .wrapper {
-    flex-direction: column;
-    order: -1;
-  }
-}
-
 @media (min-width: 768px) {
   .page {
     padding-top: 1.5rem;
@@ -53,7 +41,14 @@
   }
 
   .canvas {
+    flex-direction: row;
+    justify-content: space-between;
     gap: 0;
+  }
+
+  .wrapper {
+    flex-direction: column;
+    order: -1;
   }
 }
 
