@@ -161,6 +161,24 @@ export const PixelGrid = ({ currentColor, selectedSize }: PixelGridProps) => {
     paintCell(rowIndex, columnIndex);
   }
 
+  function handleTouchMove(event: React.TouchEvent<HTMLDivElement>) {
+    const touch = event.touches[0];
+    const element = document.elementFromPoint(touch.clientX, touch.clientY);
+
+    const row = element?.getAttribute("data-row");
+    const column = element?.getAttribute("data-column");
+
+    if (!row || !column) {
+      return;
+    }
+
+    const rowIndex = parseInt(row);
+    const columnIndex = parseInt(column);
+
+    setPaintActive(true);
+    paintCell(rowIndex, columnIndex);
+  }
+
   return (
     <div className={styles.container}>
       <div
@@ -184,9 +202,19 @@ export const PixelGrid = ({ currentColor, selectedSize }: PixelGridProps) => {
                 className={styles.cell}
                 style={{ backgroundColor: pixel }}
                 key={`${rowIndex}_${columnIndex}`}
+                data-row={rowIndex}
+                data-column={columnIndex}
                 onPointerDown={() => handlePointerDown(rowIndex, columnIndex)}
+                onTouchStart={() => {
+                  handlePointerDown(rowIndex, columnIndex);
+                }}
                 onPointerUp={() => setPaintActive(false)}
+                onTouchEnd={() => setPaintActive(false)}
+                onTouchCancel={() => setPaintActive(false)}
                 onPointerEnter={() => handlePointerEnter(rowIndex, columnIndex)}
+                onTouchMove={(event) => {
+                  handleTouchMove(event);
+                }}
               ></div>
             ))
           )}
