@@ -1,33 +1,26 @@
 import clsx from "clsx";
-import { PropsWithChildren, useCallback, useEffect } from "react";
+import { PropsWithChildren, useEffect } from "react";
 import styles from "./Modal.module.css";
 
-type ModalProps = {
+type ModalProps = PropsWithChildren<{
   isShown: boolean;
   onCancel: () => void;
-};
+}>;
 
-export const Modal = ({
-  isShown,
-  onCancel,
-  children,
-}: PropsWithChildren<ModalProps>) => {
-  const handleKeyUp = useCallback(
-    (event: KeyboardEvent) => {
+export const Modal = ({ isShown, onCancel, children }: ModalProps) => {
+  useEffect(() => {
+    function handleKeyUp(event: KeyboardEvent) {
       if (event.key === "Escape") {
         onCancel();
       }
-    },
-    [onCancel]
-  );
+    }
 
-  useEffect(() => {
     document.addEventListener("keyup", handleKeyUp);
 
     return () => {
       document.removeEventListener("keyup", handleKeyUp);
     };
-  }, [handleKeyUp]);
+  }, [onCancel]);
 
   if (!isShown) {
     return;
